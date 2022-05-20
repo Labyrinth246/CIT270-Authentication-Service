@@ -5,7 +5,14 @@ const md5 = require('md5');
 const {createClient} = require('redis');
 
 
-const redisClient = createClient();
+const redisClient = createClient(
+    {
+        socket:{
+            port: 6379,
+            host: '127.0.0.1'
+        }
+    }
+);
 
 
 const app = express();//use the library
@@ -22,9 +29,9 @@ const validatePassword = async(req,res) => {
     await redisClient.connect();
     const reqHashedPassword = md5(req.body.password);
     const redisHashedPassword = await redisClient.hGet('password',req.body.userName);
-
-    console.log('Request Body',JSON.stringify(req.body));
     const loginRequest = req.body;
+    console.log('Request Body',JSON.stringify(req.body));
+    
 
     //const password = await redisClient.hmGet(req.body.userName)
 
@@ -37,6 +44,7 @@ const validatePassword = async(req,res) => {
         }
 };
 
+app.post('/login', validatePassword);
 
 app.get('/',(req,res)=>{//every time something calls your API, that is a request
     res.send("HOLY CRAP ITS WORKING!")//a response is when an API gives the inofrmation requested
