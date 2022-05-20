@@ -19,14 +19,15 @@ const app = express();//use the library
 app.use(bodyParser.json());//use the middleware (call it before anything else happens on each request)
 
 
-app.listen(port, ()=>{
-    console.log("listening...")
+app.listen(port, async ()=>{
+    await redisClient.connect();
+    console.log("listening on port:"+port);
 });
 
 
 //app.post('/login',async (req,res)=>{}//a post is when a client sends information to an API
 const validatePassword = async(req,res) => {
-    await redisClient.connect();
+    
     const reqHashedPassword = md5(req.body.password);
     const redisHashedPassword = await redisClient.hGet('password',req.body.userName);
     const loginRequest = req.body;
