@@ -25,6 +25,7 @@ app.listen(port, async ()=>{
 });
 
 
+
 //app.post('/login',async (req,res)=>{}//a post is when a client sends information to an API
 const validatePassword = async(req,res) => {
     
@@ -36,7 +37,7 @@ const validatePassword = async(req,res) => {
 
     //const password = await redisClient.hmGet(req.body.userName)
 
-    if (loginRequest.userName=="jacobjacob@gmail.com" && loginRequest.password==hashedPasswordFromUser){
+    if (loginRequest.userName=="jacobjacob@gmail.com" && reqHashedPassword == redisHashedPassword){
         res.status(200);
         res.send("Welcome");
     } else{
@@ -47,6 +48,23 @@ const validatePassword = async(req,res) => {
 
 app.post('/login', validatePassword);
 
+
+
 app.get('/',(req,res)=>{//every time something calls your API, that is a request
     res.send("HOLY CRAP ITS WORKING!")//a response is when an API gives the inofrmation requested
 });
+
+
+
+
+
+const signup = async(req,res) =>{
+
+    const hashedNewPassword = md5(req.body.newPassword);
+
+
+    const setNewUser = await redisClient.hSet('password', req.body.newUserName, hashedNewPassword);
+
+}
+
+app.post('/signup', signup);
