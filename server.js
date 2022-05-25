@@ -46,7 +46,17 @@ const validatePassword = async(req,res) => {
         }
 };
 
-app.post('/login', validatePassword);
+
+
+const signup = async(req,res) =>{
+
+    const hashedNewPassword = md5(req.body.newPassword);
+    await redisClient.hSet('password', req.body.newUserName, hashedNewPassword);
+    res.status(200);
+    res.send({result:"Saved"});
+
+}
+
 
 
 
@@ -57,14 +67,6 @@ app.get('/',(req,res)=>{//every time something calls your API, that is a request
 
 
 
-
-const signup = async(req,res) =>{
-
-    const hashedNewPassword = md5(req.body.newPassword);
-
-
-    const setNewUser = await redisClient.hSet('password', req.body.newUserName, hashedNewPassword);
-
-}
-
 app.post('/signup', signup);
+
+app.post('/login', validatePassword);
