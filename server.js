@@ -1,8 +1,10 @@
 const express = require('express');//import the library
 const port = 3000;
+const https = require('https');
 const bodyParser = require('body-parser');//body-parder is called middleware
 const md5 = require('md5');
 const {createClient} = require('redis');
+const fs = require('fs');
 
 
 const redisClient = createClient(
@@ -19,11 +21,15 @@ const app = express();//use the library
 app.use(bodyParser.json());//use the middleware (call it before anything else happens on each request)
 
 
-app.listen(port, async ()=>{
+
+
+https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert'),
+}, app).listen(port, async ()=>{
     await redisClient.connect();
     console.log("listening on port:"+port);
 });
-
 
 
 //app.post('/login',async (req,res)=>{}//a post is when a client sends information to an API
