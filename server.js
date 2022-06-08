@@ -26,6 +26,7 @@ app.use(bodyParser.json());//use the middleware (call it before anything else ha
 https.createServer({
     key: fs.readFileSync('server.key'),
     cert: fs.readFileSync('server.cert'),
+    passphrase: 'P@ssw0rd',
 }, app).listen(port, async ()=>{
     await redisClient.connect();
     console.log("listening on port:"+port);
