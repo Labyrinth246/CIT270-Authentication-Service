@@ -1,1 +1,1 @@
-curl -d "@datasignup.json" -X POST -H "Content-Type:application/json" https://spencerbaker.nodejs.cit270.com:443/signup
+curl -d "@datasignup.json" -X POST -H "Content-Type:application/json" https://spencerbaker-nodejs.cit270.com:443/signup
