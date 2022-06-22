@@ -1,7 +1,7 @@
 const express = require('express');//import the library
-const port = 3000;
+const port = 443;
 const https = require('https');
-const bodyParser = require('body-parser');//body-parder is called middleware
+const bodyParser = require('body-parser');//body-parser is called middleware
 const md5 = require('md5');
 const {createClient} = require('redis');
 const fs = require('fs');
