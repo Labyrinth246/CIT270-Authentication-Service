@@ -2,3 +2,5 @@ node_modules
 server.cert
 server.key
 dump.rdb
+apiclient.bat
+apiclientsignup.bat

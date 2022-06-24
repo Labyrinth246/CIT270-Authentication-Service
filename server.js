@@ -45,7 +45,7 @@ const validatePassword = async(req,res) => {
 
     //const password = await redisClient.hmGet(req.body.userName)
 
-    if (loginRequest.userName=="jacobjacob@gmail.com" && reqHashedPassword == redisHashedPassword){
+    if (reqHashedPassword == redisHashedPassword){
         res.status(200);
         res.send("Welcome");
     } else{
