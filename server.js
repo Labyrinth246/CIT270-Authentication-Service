@@ -10,10 +10,6 @@ const fs = require('fs');
 const redisClient = createClient(
     {
         url: 'redis://default:wowyzowy@35.193.212.37:6379'
-//        socket:{
-//            port: 6379,
-//            host: '127.0.0.1'
-//        }
     }
 );
 
