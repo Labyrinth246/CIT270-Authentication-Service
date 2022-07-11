@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spencer-cit270
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spencer-cit270
+  template:
+    metadata:
+      labels:
+        app: spencer-cit270
+    spec:
+      containers:
+      - name: spencer-cit270
+        image: ---
+        command: ["npm"]
+        args: ["run","start"]
+        ports:
+          - containerPort: 443
+        resources:
+          limits:
+            cpu: ".125"
+            memory: "500Mi"
+          requests:
+            cpu: ".1"
+            memory: "250Mi"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 443
+            scheme: HTTPS
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 443
+            scheme: HTTPS
+          initialDelaySeconds: 3
+          periodSeconds: 3
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spencer-cit270-loadbalancer
+spec:
+  selector:
+    app: spencer-cit270
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 3000
