@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: spencer-cit270
-        image: ---
+        image: labyrinth246/cit270
         command: ["npm"]
         args: ["run","start"]
         ports:
