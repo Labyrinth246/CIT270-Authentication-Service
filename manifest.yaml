@@ -53,3 +53,26 @@ spec:
   ports:
     - port: 80
       targetPort: 3000
+
+---
+apiversion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: spencer-cit270-ingress
+  namespace: default
+  annotations:
+    ngix.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-cluster-issuer"
+spec:
+  tls:
+  - hosts:
+    - spencer.cit270.com
+    secretName: spencerbaker-dev-tls
+  rules:
+  - host: spencer.cit270.com
+    http:
+      paths:
+      - backend:
+          serviceName: spencer-cit270-loadbalancer
+          servicePort: 80
